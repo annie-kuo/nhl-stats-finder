@@ -1,13 +1,9 @@
-# f = open("reference_ids.csv", "w")
-# f.write("Now the file has more content!")
-# f.close()
-
 import pandas as pd
 import numpy as np
 from urllib.request import urlopen
 
 root = "https://statsapi.web.nhl.com"
-path = "reference_ids.xlsx"
+path = "nhl_stats.xlsx"
 writer = pd.ExcelWriter(path, engine = 'xlsxwriter')
 
 
@@ -55,7 +51,7 @@ t_df.to_excel(writer, sheet_name = 'Teams IDs', index = False)
 
 
 # PLAYERS
-p_cols = ["Player", "ID", "Link", "GP", "G", "A", "P"]
+p_cols = ["Player", "ID", "Link", "Position", "GP", "G", "A", "P"]
 p_df = pd.DataFrame(columns = p_cols)
 
 # get players' ids
@@ -79,10 +75,11 @@ while i < len(t_df):
         # retrieve info
         p_id = r_info[j][-9:-1].strip()
         p_name = r_info[j+1][20:-2]
-        p_link = r_info[j+2][16:-2]
+        p_link = r_info[j+2][16:-1]
+        p_pos = r_info[j+9][-3:-1].strip("\"")
     
         # add info
-        new_row = {'Player': p_name, 'ID': p_id, 'Link': p_link}
+        new_row = {'Player': p_name, 'ID': p_id, 'Link': p_link, 'Position': p_pos}
         p_df = p_df.append(new_row, ignore_index = True)
     
         # update pointer

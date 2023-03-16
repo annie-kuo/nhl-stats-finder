@@ -51,7 +51,7 @@ t_df.to_excel(writer, sheet_name = 'Teams IDs', index = False)
 
 
 # PLAYERS
-p_cols = ["Player", "ID", "Link", "Position", "GP", "G", "A", "P"]
+p_cols = ["Player", "ID", "Link", "Position"]
 p_df = pd.DataFrame(columns = p_cols)
 
 # get players' ids
